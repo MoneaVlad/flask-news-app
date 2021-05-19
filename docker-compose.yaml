@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  database:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'news'
+      MYSQL_USER: 'news'
+      MYSQL_PASSWORD: 'news'
+      MYSQL_ROOT_PASSWORD: 'news'
+    ports:
+      - '3306:3306'
+    volumes:
+      - db-data:/var/lib/mysql
+  app:
+    image: docker.io/library/flask-news-app:latest 
+    restart: always
+    environment:
+      DB_USERNAME: 'news'
+      DB_PASS: 'news'
+      DB_NAME: 'news'
+      DB_HOST: 'database'
+    ports:
+      - '5000:5000'
+    depends_on:
+      - database
+
+
+volumes:
+  db-data:

@@ -1,0 +1,35 @@
+
+{% extends "layout.html" %}
+{% block content %}
+    <form action="{{ url_for('news') }}" method="post">
+        <div class="input-group mb-3">
+            <select name = "newsSection" class="custom-select" id="inputGroupSelect03">
+                {% for key in topics %}
+                    <option value = {{ key }} {% if key == selectedNewsSection %} selected {% endif %}> {{ key }} </option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-success" type="submit">Get my News</button>
+
+        </div>
+    </form>
+    
+    <div>
+        {% if result is defined and result|length > 0 %}
+            <h1 align="center"> News related to {{selectedNewsSection}}!</h1>
+            <br>
+                {% for news in result %}
+                    <a href={{news[1]}} class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ news[0] }}</h5>
+                        </div>
+                    </a>
+                {% endfor%}
+
+        {% endif %}
+
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{ error }}
+        {% endif %}
+    </div>
+
+{% endblock content %}

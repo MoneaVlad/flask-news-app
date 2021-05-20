@@ -14,7 +14,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
   app:
-    image: docker.io/library/flask-news-app:latest 
+    image: docker.io/moneavlad/flask-news-app
     restart: always
     environment:
       DB_USERNAME: 'news'
